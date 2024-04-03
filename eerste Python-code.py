@@ -34,7 +34,7 @@ wf.close
 
 chunk = 1024
 rate = 44100
-db_drop= 30
+db_drop= 20
 results = []
 files = []
 
@@ -49,20 +49,20 @@ def bereken_dB(wav_file):
     
     return dB
 
-def dertig_dB_drop(wav_file, target_drop_dB):
+def twintig_dB_drop(wav_file, target_drop_dB):
     dB = bereken_dB(wav_file)
    
     max_dB = np.max(dB)
     imax_dB = np.argmax(dB)
 
 
-    drop_index = np.argmax(dB[imax_dB:] <= (max_dB - db_drop))
+    drop_index = np.argmax(dB[imax_dB:] <= (max_dB - 3 * db_drop))
     time_of_drop = np.round((drop_index * chunk / rate), decimals=3)
 
     return time_of_drop
 
 file = r"C:\Users\leoni\Downloads\test.wav"
-time_of_drop = dertig_dB_drop(file, db_drop)
+time_of_drop = twintig_dB_drop(file, db_drop)
 results.append(time_of_drop)
 files.append(file)
 
